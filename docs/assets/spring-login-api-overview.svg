@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">SENA Login Backend Spring API overview</title>
+  <desc id="desc">Architecture overview for a Spring Boot REST API that manages usuarios in a MySQL database.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef7ff"/>
+      <stop offset="50%" stop-color="#f7fbff"/>
+      <stop offset="100%" stop-color="#e8fff2"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f3f8ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+    <style>
+      .title{font:800 44px Inter,Segoe UI,Arial,sans-serif;fill:#0f172a}.subtitle{font:500 22px Inter,Segoe UI,Arial,sans-serif;fill:#475569}.label{font:800 25px Inter,Segoe UI,Arial,sans-serif;fill:#0f172a}.small{font:500 18px Inter,Segoe UI,Arial,sans-serif;fill:#475569}.mono{font:700 18px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#0f172a}.pill{font:800 15px Inter,Segoe UI,Arial,sans-serif;fill:#ffffff}.muted{font:600 16px Inter,Segoe UI,Arial,sans-serif;fill:#64748b}
+    </style>
+  </defs>
+  <rect width="1280" height="720" rx="0" fill="url(#bg)"/>
+  <circle cx="1060" cy="105" r="170" fill="#bbf7d0" opacity="0.34"/>
+  <circle cx="205" cy="645" r="220" fill="#bfdbfe" opacity="0.45"/>
+  <g transform="translate(78 62)">
+    <text class="title" x="0" y="0" dominant-baseline="hanging">SENA Login Backend</text>
+    <text class="subtitle" x="0" y="58" dominant-baseline="hanging">Spring Boot REST API for user registration, search, update and deletion.</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="90" y="170" width="330" height="355" rx="28" fill="url(#card)" stroke="#dbeafe"/>
+    <rect x="475" y="170" width="330" height="355" rx="28" fill="url(#card)" stroke="#dbeafe"/>
+    <rect x="860" y="170" width="330" height="355" rx="28" fill="url(#card)" stroke="#dbeafe"/>
+  </g>
+  <g transform="translate(130 215)">
+    <rect width="104" height="34" rx="17" fill="#2563eb"/><text class="pill" x="52" y="23" text-anchor="middle">CLIENT</text>
+    <text class="label" x="0" y="78">React / HTTP client</text>
+    <text class="small" x="0" y="118">Consumes JSON endpoints</text>
+    <text class="mono" x="0" y="170">GET  /api/v1/usuarios</text>
+    <text class="mono" x="0" y="205">POST /api/v1/usuarios</text>
+    <text class="mono" x="0" y="240">GET  /query?username=</text>
+  </g>
+  <g transform="translate(515 215)">
+    <rect width="88" height="34" rx="17" fill="#16a34a"/><text class="pill" x="44" y="23" text-anchor="middle">API</text>
+    <text class="label" x="0" y="78">Spring Boot 3.3</text>
+    <text class="small" x="0" y="118">Controller → Service → Repository</text>
+    <text class="mono" x="0" y="170">UsuarioController</text>
+    <text class="mono" x="0" y="205">UsuarioService</text>
+    <text class="mono" x="0" y="240">UsuarioRepository</text>
+  </g>
+  <g transform="translate(900 215)">
+    <rect width="116" height="34" rx="17" fill="#f97316"/><text class="pill" x="58" y="23" text-anchor="middle">DATABASE</text>
+    <text class="label" x="0" y="78">MySQL</text>
+    <text class="small" x="0" y="118">Database: login_react_spring</text>
+    <text class="mono" x="0" y="170">Table: usuarios</text>
+    <text class="mono" x="0" y="205">id, username</text>
+    <text class="mono" x="0" y="240">name, password</text>
+  </g>
+  <path d="M428 345h36" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/><path d="M452 330l20 15-20 15" fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M813 345h36" stroke="#16a34a" stroke-width="6" stroke-linecap="round"/><path d="M837 330l20 15-20 15" fill="none" stroke="#16a34a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(90 575)">
+    <rect width="1100" height="70" rx="22" fill="#0f172a" opacity="0.92"/>
+    <text class="muted" x="34" y="43" fill="#cbd5e1">Validated by source inspection. Local execution requires Java 17 and a MySQL server.</text>
+  </g>
+</svg>

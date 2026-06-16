@@ -1,72 +1,138 @@
-# LOGIN SENA SPRING BACKEND
+# SENA Login Backend Spring
 
-## Configuración y inicio del proyecto
+Backend REST para la evidencia SENA de login y gestión de usuarios. El proyecto expone endpoints CRUD sobre una entidad `UsuarioModel` y persiste la información en MySQL usando Spring Data JPA.
 
-### Configurar conexión a la base de datos
+![SENA Login Backend Spring API overview](docs/assets/spring-login-api-overview.svg)
 
-/src/main/resources/application.properties y editar los datos:
+## Stack
 
-````bash
+- Java 17
+- Spring Boot 3.3.0
+- Spring Web
+- Spring Data JPA
+- MySQL Connector/J
+- Maven Wrapper
+- Empaquetado WAR con Tomcat `provided`
+
+## Arquitectura
+
+```text
+HTTP client / frontend
+        ↓
+UsuarioController
+        ↓
+UsuarioService
+        ↓
+UsuarioRepository
+        ↓
+MySQL: login_react_spring.usuarios
+```
+
+## Modelo principal
+
+`UsuarioModel` representa la tabla `usuarios` con estos campos:
+
+| Campo | Tipo | Descripción |
+| --- | --- | --- |
+| `id` | `Long` | Identificador autogenerado |
+| `username` | `String` | Nombre de usuario usado para búsquedas |
+| `name` | `String` | Nombre visible del usuario |
+| `password` | `String` | Contraseña enviada por el cliente |
+
+> Nota técnica: este proyecto no incluye Spring Security ni cifrado de contraseñas. Para producción se debe agregar hashing, validaciones y reglas de autorización antes de exponerlo públicamente.
+
+## Configuración
+
+Crear una base de datos MySQL local:
+
+```sql
+CREATE DATABASE login_react_spring;
+```
+
+Configurar las credenciales mediante variables de entorno o editar `src/main/resources/application.properties` para tu entorno local:
+
+```properties
 spring.application.name=login
-spring.datasource.url=jdbc:mysql://localhost:3306/login_react_spring
-spring.datasource.username=USUARIOPROPIO
-spring.datasource.password=CONTRASENIAPROPIA
+spring.datasource.url=${DB_URL:jdbc:mysql://localhost:3306/login_react_spring}
+spring.datasource.username=${DB_USERNAME:root}
+spring.datasource.password=${DB_PASSWORD:}
 spring.jpa.hibernate.ddl-auto=update
-````
+```
 
-### Verificar que se hallan instalado las dependencias Maven
+## Ejecución local
 
-### Correr el proyecto
+```bash
+./mvnw spring-boot:run
+```
 
+La API queda disponible por defecto en:
+
+```text
+http://localhost:8080/api/v1/usuarios
+```
 
 ## Endpoints
 
-- Consultar usuarios (método GET):
-/api/v1/usuarios
+| Método | Ruta | Uso |
+| --- | --- | --- |
+| `GET` | `/api/v1/usuarios` | Lista todos los usuarios |
+| `GET` | `/api/v1/usuarios/{id}` | Busca un usuario por id |
+| `GET` | `/api/v1/usuarios/query?username={username}` | Busca usuarios por username |
+| `POST` | `/api/v1/usuarios` | Crea o actualiza un usuario |
+| `DELETE` | `/api/v1/usuarios/{id}` | Elimina un usuario por id |
 
-- Registar nuevo usuario (método POST):
-/api/v1/usuarios
+### Crear usuario
 
-Enviar en el body de la petición:
-````JSON
+```http
+POST /api/v1/usuarios
+Content-Type: application/json
+```
+
+```json
 {
-  "username": "USERNAME DE EJEMPLO",
-  "name": "NAME DE EJEMPLO",
-  "password": "CONTRASEÑA DE EJEMPLO"
+  "username": "usuario.demo",
+  "name": "Usuario Demo",
+  "password": "cambiar-antes-de-produccion"
 }
-````
+```
 
-- Actualizar usuario (método POST): Esto podemos realizarlo con el mismo método de registrar usuarios, ya que Spring permite  enviando el id del usuario cambiar los demás atributos
-/api/v1/usuarios
+### Actualizar usuario
 
-Enviar en el body:
-````JSON
+El mismo endpoint `POST /api/v1/usuarios` actualiza cuando el cuerpo incluye un `id` existente:
+
+```json
 {
   "id": 7,
-  "username": "USERNAME DE EJEMPLO",
-  "name": "NAME DE EJEMPLO",
-  "password": "CONTRASEÑA DE EJEMPLO"
+  "username": "usuario.actualizado",
+  "name": "Usuario Actualizado",
+  "password": "cambiar-antes-de-produccion"
 }
-````
+```
 
-**NOTA**: Tener en cuenta que el id debe ser de un usuario creado en la base de datos.
+## Validación
 
+En esta actualización se revisó el código fuente y la estructura del proyecto. La ejecución local no pudo completarse en esta máquina porque no hay un Java Runtime instalado.
 
-- Eliminar usuario(método DELETE):
-/api/v1/usuarios/7
+Comando intentado:
 
-**NOTA**: El 7 es un ejemplo de id del usuario, debe usarse uno disponible en la base de datos
+```bash
+./mvnw test
+```
 
-- Encontrar usuario por id (método GET)
+Resultado del entorno:
 
-/api/v1/usuarios/7
+```text
+Unable to locate a Java Runtime.
+```
 
-**NOTA**: El 7 es un ejemplo de id del usuario, debe usarse uno disponible en la base de datos
+## Estructura relevante
 
-- Encontrar usuario por username (método GET)
-/api/v1/usuarios/query?username=USERNAME
-
-**NOTA**: En username se indica el nombre del usuario
-
-
-**GOOD LUCK**
+```text
+src/main/java/com/blaper/login
+├── controllers/UsuarioController.java
+├── models/UsuarioModel.java
+├── repositories/UsuarioRepository.java
+├── services/UsuarioService.java
+├── LoginApplication.java
+└── ServletInitializer.java
+```
